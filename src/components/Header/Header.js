@@ -8,7 +8,7 @@ function Header() {
     <header className="header">
       <img src={logo} alt="Логотип Movie Explorer" className="header__logo"/>
       <div className="header__wrapper">
-        <p className="header__login-info">Регистрация</p>
+        <button className="header__register">Регистрация</button>
         <button className="header__button">Войти</button>
       </div>
     </header>

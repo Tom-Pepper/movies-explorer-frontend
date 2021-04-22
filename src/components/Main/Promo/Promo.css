@@ -1,0 +1,37 @@
+.promo {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0 14px;
+  background-color: #073042;
+  min-height: 570px;
+  min-width: 320px;
+
+  background-image: url('/src/images/promo-logo.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 248px;
+}
+
+.promo__title {
+  margin: 0;
+  align-self: center;
+
+  font-weight: 400;
+  font-size: 31px;
+  line-height: 39px;
+  text-align: center;
+}
+
+@media screen and (min-width: 566px) {
+  .promo__title {
+    font-size: 50px;
+    line-height: 58px;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .promo__title {
+    padding: 0 200px;
+  }
+}
