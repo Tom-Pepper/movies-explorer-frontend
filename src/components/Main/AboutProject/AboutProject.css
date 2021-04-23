@@ -31,7 +31,7 @@
 }
 
 .progress-bar {
-  padding: 60px 0 93px;
+  padding: 60px 0 70px;
   display: grid;
   grid-template-columns: 1fr 2fr;
 }
