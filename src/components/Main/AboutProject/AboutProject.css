@@ -2,7 +2,6 @@
   background-color: #ffffff;
   color: #000000;
   min-width: 320px;
-  min-height: 641px;
   box-sizing: border-box;
   padding: 0 14px;
 }
@@ -31,6 +30,39 @@
   padding: 0;
 }
 
+.progress-bar {
+  padding: 60px 0 93px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.progress-bar__element {
+  color: #000000;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  padding: 11px;
+}
+
+.progress-bar__element_color_green {
+  background-color: #2BE080;
+}
+
+.progress-bar__element_color_grey {
+  background-color: #F2F2F2;
+}
+
+.progress-bar__element-description {
+  color: #A0A0A0;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  margin: 0;
+  padding-top: 10px;
+}
+
 @media screen and (min-width: 420px) {
   .about-project__content {
     grid-template-columns: repeat(2, 1fr);
@@ -39,6 +71,21 @@
 
   .about-project {
     padding: 0 20px;
+  }
+
+  .progress-bar {
+    padding: 93px 0 121px;
+  }
+
+  .progress-bar__element {
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .progress-bar__element-description {
+    font-size: 14px;
+    line-height: 17px;
+    padding-top: 14px;
   }
 }
 
@@ -79,5 +126,9 @@
   .about-project__item-text {
     font-size: 14px;
     line-height: 20px;
+  }
+
+  .progress-bar {
+    padding: 110px 0 141px;
   }
 }

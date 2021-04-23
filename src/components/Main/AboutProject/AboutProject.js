@@ -19,6 +19,12 @@ function AboutProject() {
             было соблюдать, чтобы успешно защититься.</p>
         </li>
       </ul>
+      <div className="progress-bar">
+        <div className="progress-bar__element progress-bar__element_color_green">1 неделя</div>
+        <div className="progress-bar__element progress-bar__element_color_grey">4 недели</div>
+        <p className="progress-bar__element-description">Back-end</p>
+        <p className="progress-bar__element-description">Front-end</p>
+      </div>
     </section>
   );
 }
