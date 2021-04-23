@@ -6,6 +6,7 @@
   background-color: #073042;
   min-height: 570px;
   min-width: 320px;
+  box-sizing: border-box;
 
   background-image: url('/src/images/promo-logo.svg');
   background-repeat: no-repeat;
