@@ -5,7 +5,7 @@ import PortfolioTitle from "../../PortfolioTitle/PortfolioTitle";
 
 function Techs() {
   return(
-    <section className="techs about-project">
+    <section className="techs about-project" id="techs">
       <PortfolioTitle title="Технологии" />
       <h3 className="techs__title">7 технологий</h3>
       <p className="techs__description about-project__item-text">На курсе веб-разработки мы освоили технологии,
