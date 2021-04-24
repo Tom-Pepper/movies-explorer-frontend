@@ -26,6 +26,7 @@
 
 .portfolio__list-item:last-of-type {
   border: none;
+  padding-bottom: 70px;
 }
 
 .portfolio__list-item:first-child {
