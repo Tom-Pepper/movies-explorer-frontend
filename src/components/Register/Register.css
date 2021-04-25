@@ -1,0 +1,20 @@
+.register {
+  margin: 0;
+  height: 100vh;
+  padding: 56px 30px 30px;
+  box-sizing: border-box;
+  color: #000000;
+  text-align: center;
+}
+
+.register__header {
+
+}
+
+.register__title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 0;
+  padding: 50px 0 80px;
+}

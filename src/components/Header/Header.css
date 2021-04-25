@@ -23,7 +23,12 @@
   display: flex;
 }
 
+.header__wrapper_hidden {
+  display: none;
+}
+
 .header__register {
+  text-decoration: none;
   background-color: transparent;
   cursor: pointer;
   border: none;
@@ -45,6 +50,11 @@
 }
 
 .header__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-decoration: none;
   min-width: 54px;
   min-height: 26px;
   border: 0;
