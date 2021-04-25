@@ -1,5 +1,6 @@
 .form {
   padding-bottom: 30px;
+  max-width: 396px;
 }
 
 .form__subText-wrapper {
@@ -33,7 +34,7 @@
 .form__link {
   color: #3456F3;
   text-decoration: none;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 12px;
   line-height: 14px;
 
@@ -52,4 +53,37 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
+}
+
+@media screen and (min-width: 717px) {
+  .form {
+    padding-bottom: 232px;
+  }
+
+  .form__button {
+    margin-top: calc(69px + 65px - 24px);
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .form__subText-wrapper {
+    padding-top: 16px;
+  }
+
+  .form__text {
+    padding-right: 6px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .form__link {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .form {
+    padding-bottom: 70px;
+  }
 }

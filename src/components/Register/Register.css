@@ -1,6 +1,6 @@
 .register {
   margin: 0;
-  height: 100vh;
+  height: 100%;
   padding: 56px 30px 30px;
   box-sizing: border-box;
   color: #000000;
@@ -17,4 +17,51 @@
   line-height: 29px;
   margin: 0;
   padding: 50px 0 80px;
+  max-width: 396px;
+}
+
+@media screen and (min-width: 517px) {
+  .register {
+    padding: 0 100px;
+    text-align: start;
+  }
+
+  .register__header {
+    padding-top: 100px;
+  }
+}
+
+@media screen and (min-width: 717px) {
+  .register {
+    padding: 0 186px;
+    text-align: start;
+  }
+
+  .register__header {
+    padding-top: 232px;
+  }
+
+  .register__title {
+    padding: 40px 0 109px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .register {
+    padding: 0 320px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .register {
+    padding: 0 442px;
+  }
+
+  .register__header {
+    padding-top: 70px;
+  }
+
+  .register__title {
+    padding: 40px 0 40px;
+  }
 }

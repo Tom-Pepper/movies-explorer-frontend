@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, useHistory, withRouter } from 'react-router-dom';
 
-import Header from '../Header/Header';
-import Main from '../Main/Main';
-
 import './App.css';
-import Footer from "../Footer/Footer";
+import Main from '../Main/Main';
 import Register from "../Register/Register";
+import Login from "../Login/Login";
 
 function App() {
   // Хуки, стейты
@@ -20,9 +18,9 @@ function App() {
           <Main />
         </Route>
 
-        {/*<Route exact path="/signin">*/}
-        {/*  <Login />*/}
-        {/*</Route>*/}
+        <Route exact path="/signin">
+          <Login />
+        </Route>
 
         <Route exact path="/signup">
           <Register />

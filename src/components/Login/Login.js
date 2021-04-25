@@ -1,31 +1,22 @@
 import React from 'react';
 
-import './Register.css';
-import logo from "../../images/logo.svg";
+import './Login.css';
 import {NavLink} from "react-router-dom";
+import logo from "../../images/logo.svg";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
 
-function Register() {
+function Login() {
   return(
-    <div className="register">
+    <div className="login register">
       <NavLink to="/"><img src={logo} alt="Логотип Movie Explorer" className="header__logo register__header"/></NavLink>
-      <h2 className="register__title">Добро пожаловать!</h2>
+      <h2 className="register__title">Рады видеть!</h2>
       <Form
-        buttonText="Зарегистрироваться"
-        text="Уже зарегистрированы?"
-        url="/signin"
-        linkText="Войти"
+        buttonText="Войти"
+        text="Еще не зарегистрированы?"
+        url="/signup"
+        linkText="Регистрация"
       >
-        <Input
-          id="user-name"
-          type="text"
-          name="name"
-          inputTitle="Имя"
-          minLength="2"
-          maxLength="20"
-          errorText=""
-        />
         <Input
           id="user-email"
           type="email"
@@ -33,7 +24,7 @@ function Register() {
           inputTitle="E-mail"
           minLength="7"
           maxLength="200"
-          errorText="Что-то пошло не так..."
+          errorText=""
         />
         <Input
           id="user-password"
@@ -49,4 +40,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;
