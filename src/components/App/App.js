@@ -5,6 +5,7 @@ import './App.css';
 import Main from '../Main/Main';
 import Register from "../Register/Register";
 import Login from "../Login/Login";
+import NotFoundPage from "../NotFoundPage/NotFoundPage";
 
 function App() {
   // Хуки, стейты
@@ -37,6 +38,10 @@ function App() {
         {/*<Route exact path="/profile">*/}
         {/*  <Profile />*/}
         {/*</Route>*/}
+
+        <Route path="*">
+          <NotFoundPage />
+        </Route>
 
       </Switch>
 
