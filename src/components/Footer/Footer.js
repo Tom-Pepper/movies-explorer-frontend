@@ -12,13 +12,16 @@ function Footer() {
         <div className="footer__links-wrapper">
           <ul className="footer__links">
             <li className="footer__item">
-              <a href="https://praktikum.yandex.ru/" className="footer__item-link" target="_blank">Яндекс.Практикум</a>
+              <a href="https://praktikum.yandex.ru/" className="footer__item-link"
+                 target="_blank" rel="noreferrer">Яндекс.Практикум</a>
             </li>
             <li className="footer__item">
-              <a href="https://github.com/Tom-Pepper" className="footer__item-link" target="_blank">Github</a>
+              <a href="https://github.com/Tom-Pepper" className="footer__item-link"
+                 target="_blank" rel="noreferrer" >Github</a>
             </li>
             <li className="footer__item">
-              <a href="https://www.linkedin.com/in/artem88/" className="footer__item-link" target="_blank">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/artem88/" className="footer__item-link"
+                 target="_blank" rel="noreferrer" >LinkedIn</a>
             </li>
           </ul>
         </div>

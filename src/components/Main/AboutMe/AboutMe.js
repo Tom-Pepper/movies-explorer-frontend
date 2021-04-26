@@ -39,11 +39,12 @@ function AboutMe() {
           </div>
           <ul className="about-me__contacts">
             <li className="about-me__contacts-link">
-              <a href="https://www.linkedin.com/in/artem88/" className="about-me__contacts-link" target="_blank">
-                LinkedIn</a>
+              <a href="https://www.linkedin.com/in/artem88/" className="about-me__contacts-link"
+                 target="_blank" rel="noreferrer" >LinkedIn</a>
             </li>
             <li className="about-me__contacts-link">
-              <a href="https://github.com/Tom-Pepper" className="about-me__contacts-link" target="_blank">GitHub</a>
+              <a href="https://github.com/Tom-Pepper" className="about-me__contacts-link"
+                 target="_blank" rel="noreferrer" >GitHub</a>
             </li>
           </ul>
         </div>

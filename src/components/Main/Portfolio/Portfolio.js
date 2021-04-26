@@ -10,17 +10,17 @@ function Portfolio() {
       <ul className="portfolio__list">
         <li className="portfolio__list-item">
           <a href="https://tom-pepper.github.io/how-to-learn/index.html" className="portfolio__list-link"
-             target="_blank">Статичный сайт</a>
+             target="_blank" rel="noreferrer" >Статичный сайт</a>
           <img src={arrow} alt="Стрелка, указывающая в правый верхний угол" className="portfolio__list-link-image"/>
         </li>
         <li className="portfolio__list-item">
           <a href="https://tom-pepper.github.io/russian-travel/index.html" className="portfolio__list-link"
-             target="_blank">Адаптивный сайт</a>
+             target="_blank" rel="noreferrer" >Адаптивный сайт</a>
           <img src={arrow} alt="Стрелка, указывающая в правый верхний угол" className="portfolio__list-link-image"/>
         </li>
         <li className="portfolio__list-item">
           <a href="https://tom-pepper.github.io/mesto/index.html" className="portfolio__list-link"
-             target="_blank">Одностраничное приложение</a>
+             target="_blank" rel="noreferrer" >Одностраничное приложение</a>
           <img src={arrow} alt="Стрелка, указывающая в правый верхний угол" className="portfolio__list-link-image"/>
         </li>
       </ul>

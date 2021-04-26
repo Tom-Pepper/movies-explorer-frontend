@@ -9,3 +9,5 @@ function Movies() {
     </main>
   );
 }
+
+export default Movies;
