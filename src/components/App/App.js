@@ -10,6 +10,9 @@ import NotFoundPage from "../NotFoundPage/NotFoundPage";
 function App() {
   // Хуки, стейты
   const [loggedIn, setLoggedIn] = useState(false);
+
+
+
   return (
     <div className="page">
 
