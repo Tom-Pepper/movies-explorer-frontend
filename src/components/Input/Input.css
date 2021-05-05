@@ -29,6 +29,10 @@
   border-bottom: 1px solid #3456F3;
 }
 
+.input__field_state_error {
+  color: #FF3055;
+}
+
 .input__error {
   display: none;
   padding-top: 6px;

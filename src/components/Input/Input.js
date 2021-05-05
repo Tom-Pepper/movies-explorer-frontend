@@ -5,10 +5,10 @@ import './Input.css';
 function Input({ type, id, inputTitle, name, minLength, maxLength, errorText }) {
   return(
     <div className="input">
-      <p className="input__label">{inputTitle}</p>
+      <label className="input__label">{inputTitle}</label>
       <input
         required
-        className="input__field"
+        className={`input__field ${errorText && "input__field_state_error"}`}
         type={type}
         id={id}
         name={name}

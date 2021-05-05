@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import './Main.css';
 
@@ -11,10 +11,15 @@ import Portfolio from "./Portfolio/Portfolio";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-function Main() {
+function Main({ menuIsOpened, openMenu, closeMenu }) {
+
   return(
     <main className="content">
-      <Header />
+      <Header
+        menuIsOpened={menuIsOpened}
+        openMenu={openMenu}
+        closeMenu={closeMenu}
+      />
       <Promo />
       <NavTab />
       <AboutProject />

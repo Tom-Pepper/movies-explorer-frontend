@@ -6,12 +6,30 @@ import Main from '../Main/Main';
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
+import Profile from "../Profile/Profile";
+import Header from "../Header/Header";
 
 function App() {
   // Хуки, стейты
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const [menuIsOpened, setMenuIsOpened] = useState(false);
 
+  function handleOpenMenu() {
+    setMenuIsOpened(true);
+    window.addEventListener('click', handleClosePopupWithOverlayClick);
+  }
+
+  function handleCloseMenu() {
+    setMenuIsOpened(false);
+    window.removeEventListener('click', handleClosePopupWithOverlayClick);
+  }
+
+  function handleClosePopupWithOverlayClick(evt) {
+    if (evt.target.classList.contains('header__menu-wrapper')) {
+      handleCloseMenu();
+    }
+  }
 
   return (
     <div className="page">
@@ -19,7 +37,11 @@ function App() {
       <Switch>
 
         <Route exact path="/">
-          <Main />
+          <Main
+            menuIsOpened={menuIsOpened}
+            openMenu={handleOpenMenu}
+            closeMenu={handleCloseMenu}
+          />
         </Route>
 
         <Route exact path="/signin">
@@ -38,9 +60,13 @@ function App() {
         {/*  <SavedMovies />*/}
         {/*</Route>*/}
 
-        {/*<Route exact path="/profile">*/}
-        {/*  <Profile />*/}
-        {/*</Route>*/}
+        <Route exact path="/profile">
+          <Profile
+            menuIsOpened={menuIsOpened}
+            openMenu={handleOpenMenu}
+            closeMenu={handleCloseMenu}
+          />
+        </Route>
 
         <Route path="*">
           <NotFoundPage />
