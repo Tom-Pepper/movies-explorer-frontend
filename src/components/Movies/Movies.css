@@ -25,10 +25,3 @@
     padding: 0;
   }
 }
-
-@media screen and (min-width: 1000px) {
-  .movies__footer-wrapper {
-    margin: 0;
-    padding: 0;
-  }
-}
