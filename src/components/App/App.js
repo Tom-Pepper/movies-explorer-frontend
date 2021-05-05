@@ -7,7 +7,7 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import Profile from "../Profile/Profile";
-import Header from "../Header/Header";
+import Movies from "../Movies/Movies";
 
 function App() {
   // Хуки, стейты
@@ -52,9 +52,13 @@ function App() {
           <Register />
         </Route>
 
-        {/*<Route exact path="/movies">*/}
-        {/*  <Movies />*/}
-        {/*</Route>*/}
+        <Route exact path="/movies">
+          <Movies
+            menuIsOpened={menuIsOpened}
+            openMenu={handleOpenMenu}
+            closeMenu={handleCloseMenu}
+          />
+        </Route>
 
         {/*<Route exact path="/saved-movies">*/}
         {/*  <SavedMovies />*/}
