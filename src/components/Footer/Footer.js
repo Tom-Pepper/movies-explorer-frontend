@@ -2,11 +2,11 @@ import React from 'react';
 
 import './Footer.css';
 
-function Footer() {
+function Footer({ moviesPage }) {
   const currentYear = new Date().getFullYear();
 
   return(
-    <section className="footer">
+    <section className={`footer ${moviesPage && 'footer__movies-media'}`}>
       <h3 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h3>
       <div className="footer__wrapper">
         <div className="footer__links-wrapper">

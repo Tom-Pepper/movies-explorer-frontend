@@ -40,19 +40,7 @@
   }
 }
 
-@media screen and (min-width: 717px) {
-  .search {
-    margin: 0 50px;
-  }
-}
-
 @media screen and (min-width: 769px) {
-  .search {
-    margin: 0 70px;
-  }
-}
-
-@media screen and (min-width: 1000px) {
   .search {
     margin: 0 70px;
   }
