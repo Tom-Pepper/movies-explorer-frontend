@@ -3,8 +3,9 @@ import React from 'react';
 import './Movies.css';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import Search from "../Search/Search";
-import Checkbox from "../Checkbox/Checkbox";
+import Search from "./Search/Search";
+import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+import MoviesCardList from "./MoviesCardList/MoviesCardList";
 
 function Movies({ menuIsOpened, openMenu, closeMenu }) {
   return(
@@ -18,7 +19,8 @@ function Movies({ menuIsOpened, openMenu, closeMenu }) {
       <div className="movies__search-wrapper">
         <Search />
       </div>
-      <Checkbox checkboxName={'Короткометражки'}/>
+      <FilterCheckbox checkboxName={'Короткометражки'}/>
+      <MoviesCardList />
       <div className="movies__footer-wrapper">
         <Footer moviesPage={true}/>
       </div>

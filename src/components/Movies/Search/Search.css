@@ -21,7 +21,7 @@
 }
 
 .search__input-button {
-  background: url("../../images/find-button.svg") no-repeat;
+  background: url("../../../images/find-button.svg") no-repeat;
   border: none;
   width: 44px;
   height: 44px;

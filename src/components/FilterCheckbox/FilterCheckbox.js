@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './Checkbox.css';
+import './FilterCheckbox.css';
 
-function Checkbox({ checkboxName }) {
+function FilterCheckbox({ checkboxName }) {
   return(
     <div className="checkbox__wrapper">
       <label className="checkbox">
@@ -14,4 +14,4 @@ function Checkbox({ checkboxName }) {
   );
 }
 
-export default Checkbox;
+export default FilterCheckbox;
