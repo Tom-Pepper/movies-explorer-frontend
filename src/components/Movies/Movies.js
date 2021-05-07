@@ -7,7 +7,7 @@ import Search from "./Search/Search";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 
-function Movies({ menuIsOpened, openMenu, closeMenu }) {
+function Movies({ menuIsOpened, openMenu, closeMenu, isBookmarkPage }) {
   return(
     <section className="movies">
       <Header
@@ -20,7 +20,7 @@ function Movies({ menuIsOpened, openMenu, closeMenu }) {
         <Search />
       </div>
       <FilterCheckbox checkboxName={'Короткометражки'}/>
-      <MoviesCardList />
+      <MoviesCardList isBookmarkPage={isBookmarkPage}/>
       <div className="movies__footer-wrapper">
         <Footer moviesPage={true}/>
       </div>

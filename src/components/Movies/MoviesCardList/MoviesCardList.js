@@ -14,24 +14,51 @@ import image_8 from '../../../images/movies-thumbnails/banksy-8.png';
 import image_9 from '../../../images/movies-thumbnails/banksy-9.png';
 
 
-function MoviesCardList() {
+function MoviesCardList({ isBookmarkPage }) {
   return(
     <section className="movies-card-list">
       <div className="movies-card-list__movies-wrapper">
         <MovieCard
           movieImage={image_1}
-          isInBookmark={true}
+          isBookmarkPage={isBookmarkPage}
         />
-        <MovieCard movieImage={image_2}/>
-        <MovieCard movieImage={image_3}/>
-        <MovieCard movieImage={image_4}/>
-        <MovieCard movieImage={image_5}/>
-        <MovieCard movieImage={image_6}/>
-        <MovieCard movieImage={image_7}/>
-        <MovieCard movieImage={image_8}/>
-        <MovieCard movieImage={image_9}/>
+        <MovieCard
+          movieImage={image_2}
+          isBookmarkPage={isBookmarkPage}
+        />
+        <MovieCard
+          movieImage={image_3}
+          isBookmarkPage={isBookmarkPage}
+        />
+        <MovieCard
+          movieImage={image_4}
+          isBookmarkPage={isBookmarkPage}
+        />
+        <MovieCard
+          movieImage={image_5}
+          isBookmarkPage={isBookmarkPage}
+        />
+        <MovieCard
+          movieImage={image_6}
+          isBookmarkPage={isBookmarkPage}
+        />
+        <MovieCard
+          movieImage={image_7}
+          isBookmarkPage={isBookmarkPage}
+        />
+        <MovieCard
+          movieImage={image_8}
+          isBookmarkPage={isBookmarkPage}
+        />
+        <MovieCard
+          movieImage={image_9}
+          isBookmarkPage={isBookmarkPage}
+        />
       </div>
-      <button className="movies-card-list__lazy-load-button">Ещё</button>
+      <button className={`movies-card-list__lazy-load-button
+        ${isBookmarkPage && "movies-card-list__lazy-load-button_hidden"}`}>
+        Ещё
+      </button>
     </section>
   );
 }

@@ -69,6 +69,12 @@
   background-position-y: center;
 }
 
+.movie-card__button_type_remove-bookmark {
+  background: url("/src/images/delete-bookmark.svg") #F9F9F9 no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+}
+
 .movie-card__button_type_in-bookmark:hover {
   background: url("/src/images/delete-bookmark.svg") #F9F9F9 no-repeat;
   background-position-x: center;
