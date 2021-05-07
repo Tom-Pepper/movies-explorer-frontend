@@ -55,10 +55,14 @@ function MoviesCardList({ isBookmarkPage }) {
           isBookmarkPage={isBookmarkPage}
         />
       </div>
-      <button className={`movies-card-list__lazy-load-button
-        ${isBookmarkPage && "movies-card-list__lazy-load-button_hidden"}`}>
-        Ещё
-      </button>
+      {
+        isBookmarkPage ?
+          (
+            <div className="saved-movies__footer-gap" />
+          ) : (
+            <button className="movies-card-list__lazy-load-button">Ещё</button>
+          )
+      }
     </section>
   );
 }
