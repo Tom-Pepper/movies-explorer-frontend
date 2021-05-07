@@ -35,6 +35,12 @@
     padding-left: 30px;
     padding-right: 30px;
   }
+
+  .movies-card-list__lazy-load-button {
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media screen and (min-width: 717px) {
@@ -46,7 +52,6 @@
 
   .movies-card-list__lazy-load-button {
     margin: 80px auto 0;
-    width: 320px;
   }
 
   .movies-card-list {

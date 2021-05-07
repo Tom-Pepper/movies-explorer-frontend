@@ -50,7 +50,7 @@
   margin: 14px auto;
   padding: 9px 15px;
   border-radius: 30px;
-  background: #F9F9F9;
+  background-color: #F9F9F9;
   border: none;
   cursor: pointer;
   width: 100px;
@@ -59,7 +59,7 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 11px;
-  transition: all .2s ease-in-out .2s;
+  transition: opacity, background-color .1s ease-in-out .1s;
 }
 
 .movie-card__button_type_in-bookmark {

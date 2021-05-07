@@ -24,7 +24,6 @@ function Movies({ menuIsOpened, openMenu, closeMenu }) {
       <div className="movies__footer-wrapper">
         <Footer moviesPage={true}/>
       </div>
-
     </section>
   );
 }

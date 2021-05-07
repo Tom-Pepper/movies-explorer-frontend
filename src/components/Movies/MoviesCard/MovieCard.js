@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import './MoviesCard.css';
 
-function MovieCard({ movieImage, isInBookmark }) {
+function MovieCard({ movieImage }) {
+
+  const [isInBookmark, setIsInBookmark] = useState(false);
+
+  function handleAddBookmark() {
+    setIsInBookmark(!isInBookmark);
+  }
+
   return(
     <article className="movie-card">
       <figure className="movie-card__content">
@@ -11,7 +18,8 @@ function MovieCard({ movieImage, isInBookmark }) {
           <p className="movie-card__duration">27 минут</p>
         </figcaption>
         <img src={movieImage} className="movie-card__image" alt="В погоне за Бэнкси"/>
-        <button className={`movie-card__button ${isInBookmark && "movie-card__button_type_in-bookmark"}`}>
+        <button className={`movie-card__button ${isInBookmark && "movie-card__button_type_in-bookmark"}`}
+                onClick={handleAddBookmark}>
           {isInBookmark ? '' : 'Сохранить'}
         </button>
       </figure>

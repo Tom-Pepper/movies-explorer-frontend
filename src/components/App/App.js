@@ -8,6 +8,7 @@ import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import Profile from "../Profile/Profile";
 import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
 
 function App() {
   // Хуки, стейты
@@ -60,9 +61,13 @@ function App() {
           />
         </Route>
 
-        {/*<Route exact path="/saved-movies">*/}
-        {/*  <SavedMovies />*/}
-        {/*</Route>*/}
+        <Route exact path="/saved-movies">
+          <SavedMovies
+            menuIsOpened={menuIsOpened}
+            openMenu={handleOpenMenu}
+            closeMenu={handleCloseMenu}
+          />
+        </Route>
 
         <Route exact path="/profile">
           <Profile
