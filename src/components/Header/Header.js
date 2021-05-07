@@ -15,9 +15,8 @@ function Header({ menuIsOpened, openMenu, closeMenu, isProfilePageActive }) {
         <NavLink to="/signup" className="header__register">{isProfilePageActive ? '' : 'Регистрация'}</NavLink>
         <NavLink to="signin" className={`header__button ${isProfilePageActive && "header__button_hidden"}`}>Войти</NavLink>
         <button className={`header__button-burger ${!isProfilePageActive && "header__button-burger_white"}`} onClick={openMenu}/>
+        <Navigation menuIsOpened={menuIsOpened} closeMenu={closeMenu}/>
       </div>
-
-      <Navigation menuIsOpened={menuIsOpened} closeMenu={closeMenu}/>
     </header>
   );
 }
