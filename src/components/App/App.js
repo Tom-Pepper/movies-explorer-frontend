@@ -27,7 +27,7 @@ function App() {
   }
 
   function handleClosePopupWithOverlayClick(evt) {
-    if (evt.target.classList.contains('header__menu-wrapper')) {
+    if (evt.target.classList.contains('navigation__wrapper')) {
       handleCloseMenu();
     }
   }
