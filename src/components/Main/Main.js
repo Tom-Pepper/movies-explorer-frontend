@@ -11,11 +11,12 @@ import Portfolio from "./Portfolio/Portfolio";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-function Main({ menuIsOpened, openMenu, closeMenu }) {
+function Main({ menuIsOpened, openMenu, closeMenu, loggedIn }) {
 
   return(
     <main className="content">
       <Header
+        loggedIn={loggedIn}
         menuIsOpened={menuIsOpened}
         openMenu={openMenu}
         closeMenu={closeMenu}

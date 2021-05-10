@@ -64,6 +64,23 @@
   border-bottom: 2px solid #000000;
 }
 
+.navigation__link_theme_dark {
+  padding: 0;
+  margin-left: 44px;
+}
+
+.navigation__link_theme_dark:last-of-type {
+  margin-left: 16px;
+}
+
+.navigation__link_theme_white {
+  color: #ffffff;
+}
+
+.navigation__link_is-active_theme_white {
+  border-color: #ffffff;
+}
+
 .navigation__account {
   background: #F9F9F9;
   padding: 8px 20px;
@@ -74,6 +91,10 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
+}
+
+.navigation__account_theme_dark {
+  margin: 0;
 }
 
 .navigation__close-button {

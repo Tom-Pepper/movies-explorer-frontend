@@ -7,10 +7,11 @@ import Search from "./Search/Search";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 
-function Movies({ menuIsOpened, openMenu, closeMenu, isBookmarkPage }) {
+function Movies({ menuIsOpened, openMenu, closeMenu, isBookmarkPage, loggedIn }) {
   return(
     <section className="movies">
       <Header
+        loggedIn={loggedIn}
         isProfilePageActive={true}
         menuIsOpened={menuIsOpened}
         openMenu={openMenu}

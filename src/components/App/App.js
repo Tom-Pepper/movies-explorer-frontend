@@ -12,7 +12,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 
 function App() {
   // Хуки, стейты
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   const [menuIsOpened, setMenuIsOpened] = useState(false);
 
@@ -39,6 +39,7 @@ function App() {
 
         <Route exact path="/">
           <Main
+            loggedIn={loggedIn}
             menuIsOpened={menuIsOpened}
             openMenu={handleOpenMenu}
             closeMenu={handleCloseMenu}
@@ -55,6 +56,7 @@ function App() {
 
         <Route exact path="/movies">
           <Movies
+            loggedIn={loggedIn}
             menuIsOpened={menuIsOpened}
             openMenu={handleOpenMenu}
             closeMenu={handleCloseMenu}
@@ -63,6 +65,7 @@ function App() {
 
         <Route exact path="/saved-movies">
           <SavedMovies
+            loggedIn={loggedIn}
             menuIsOpened={menuIsOpened}
             openMenu={handleOpenMenu}
             closeMenu={handleCloseMenu}
@@ -71,6 +74,7 @@ function App() {
 
         <Route exact path="/profile">
           <Profile
+            loggedIn={loggedIn}
             menuIsOpened={menuIsOpened}
             openMenu={handleOpenMenu}
             closeMenu={handleCloseMenu}

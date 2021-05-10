@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import './Profile.css';
 import Header from "../Header/Header";
 
-function Profile({ menuIsOpened, openMenu, closeMenu }) {
+function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn }) {
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -15,6 +15,7 @@ function Profile({ menuIsOpened, openMenu, closeMenu }) {
     <div className="profile">
 
       <Header
+        loggedIn={loggedIn}
         isProfilePageActive={true}
         menuIsOpened={menuIsOpened}
         openMenu={openMenu}
