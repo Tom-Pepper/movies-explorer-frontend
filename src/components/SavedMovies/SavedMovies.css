@@ -1,0 +1,9 @@
+.saved-movies__footer-gap {
+  padding-top: calc(170px - 80px);
+}
+
+@media screen and (min-width: 1000px) {
+  .saved-movies__footer-gap {
+    padding-top: calc(230px - 89px);
+  }
+}

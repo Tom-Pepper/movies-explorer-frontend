@@ -1,0 +1,99 @@
+.movie-card {
+  color: #000000;
+  background: #FDFDFD;
+  border-radius: 6px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  max-width: 360px;
+  max-height: 319px;
+}
+
+.movie-card__content {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-card__info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.movie-card__title {
+  margin: 0;
+  padding: 14px;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.movie-card__duration {
+  margin: 0;
+  padding: 14px;
+
+  color: #A0A0A0;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 18px;
+}
+
+.movie-card__image {
+  max-width: 360px;
+  max-height: 200px;
+  width: 100%;
+  height: 100%;
+}
+
+.movie-card__button {
+  margin: 14px auto;
+  padding: 9px 15px;
+  border-radius: 30px;
+  background-color: #F9F9F9;
+  border: none;
+  cursor: pointer;
+  width: 100px;
+  height: 29px;
+
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 11px;
+  transition: opacity, background-color .1s ease-in-out .1s;
+}
+
+.movie-card__button_type_in-bookmark {
+  background: url("/src/images/checked-icon.svg") #FF3055 no-repeat;
+  padding: 12px 46px;
+  background-position-x: center;
+  background-position-y: center;
+}
+
+.movie-card__button_type_remove-bookmark {
+  background: url("/src/images/delete-bookmark.svg") #F9F9F9 no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+}
+
+.movie-card__button_type_in-bookmark:hover {
+  background: url("/src/images/delete-bookmark.svg") #F9F9F9 no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+}
+
+.movie-card__button:hover {
+  background-color: #E8E8E8;
+  opacity: .7;
+}
+
+@media screen and (min-width: 425px) {
+  .movie-card__title {
+    font-size: 15px;
+    padding: 18px;
+  }
+
+  .movie-card__duration {
+    font-size: 13px;
+    padding: 18px;
+  }
+}

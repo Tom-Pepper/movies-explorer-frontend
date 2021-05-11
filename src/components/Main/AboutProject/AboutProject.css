@@ -1,0 +1,134 @@
+.about-project {
+  background-color: #ffffff;
+  color: #000000;
+  min-width: 320px;
+  box-sizing: border-box;
+  padding: 0 14px;
+}
+
+.about-project__content {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.about-project__subtitle {
+  margin: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  padding: 60px 0 16px;
+}
+
+.about-project__item-text {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.progress-bar {
+  padding: 60px 0 70px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.progress-bar__element {
+  color: #000000;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  padding: 11px;
+}
+
+.progress-bar__element_color_green {
+  background-color: #2BE080;
+}
+
+.progress-bar__element_color_grey {
+  background-color: #F2F2F2;
+}
+
+.progress-bar__element-description {
+  color: #A0A0A0;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  margin: 0;
+  padding-top: 10px;
+}
+
+@media screen and (min-width: 420px) {
+  .about-project__content {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  }
+
+  .about-project {
+    padding: 0 20px;
+  }
+
+  .progress-bar {
+    padding: 93px 0 121px;
+  }
+
+  .progress-bar__element {
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .progress-bar__element-description {
+    font-size: 14px;
+    line-height: 17px;
+    padding-top: 14px;
+  }
+}
+
+@media screen and (min-width: 717px) {
+  .about-project {
+    padding: 0 50px;
+  }
+
+  .about-project__content {
+    grid-gap: 30px;
+  }
+
+  .about-project__subtitle {
+    font-size: 20px;
+    line-height: 24px;
+    padding: 70px 0 22px;
+  }
+
+  .about-project__item-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .about-project {
+    padding: 0 70px;
+  }
+
+  .about-project__subtitle {
+    padding-bottom: 26px;
+  }
+
+  .about-project__content {
+    grid-gap: 40px;
+  }
+
+  .about-project__item-text {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .progress-bar {
+    padding: 110px 0 141px;
+  }
+}
