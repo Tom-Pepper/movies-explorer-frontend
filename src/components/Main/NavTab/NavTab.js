@@ -12,21 +12,24 @@ function NavTab() {
                 className="nav-tab__link"
                 spy={true}
                 smooth={true}
-          >О проекте</Link>
+          >О проекте
+          </Link>
         </li>
         <li className="nav-tab__list-item">
           <Link to="techs"
                 className="nav-tab__link"
                 spy={true}
                 smooth={true}
-          >Технологии</Link>
+          >Технологии
+          </Link>
         </li>
         <li className="nav-tab__list-item">
           <Link to="student"
                 className="nav-tab__link"
                 spy={true}
                 smooth={true}
-          >Студент</Link>
+          >Студент
+          </Link>
         </li>
       </ul>
     </nav>

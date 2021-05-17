@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
 
 import './App.css';
 import Main from '../Main/Main';
@@ -11,15 +11,55 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-import ProtectedRoute from "../ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+
+import { register, login, updateProfile, getProfile } from "../../utils/MainApi";
+import { getMovies, getBookmarkedMovies, unBookMarkMovie, bookmarkMovie } from "../../utils/MoviesApi";
 
 function App() {
+
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+
   // Хуки, стейты
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn);
 
   const [menuIsOpened, setMenuIsOpened] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({});
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const history = useHistory();
+
+  /**
+   * Проверка токена и установка текущего пользователя
+   */
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+      getProfile(token)
+        .then((res) => {
+          if (res) {
+            const loggedIn = localStorage.getItem('isLoggedIn');
+            setLoggedIn(loggedIn);
+            setCurrentUser(res);
+          }
+          localStorage.removeItem('isLoggedIn');
+          setLoggedIn(false);
+        })
+        .then((err) => console.log(`Произошла ошибка ${err.status}`));
+    }
+  }, [loggedIn]);
+
+  /**
+   * Регистрация пользователя
+   */
+  function handleRegister(data) {
+
+  }
+
+  // Обработчики
 
   /**
    * Функция открытия бургер-меню
@@ -50,17 +90,16 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-
         <Switch>
 
-          <Route exact path="/">
-            <Main
-              loggedIn={loggedIn}
-              menuIsOpened={menuIsOpened}
-              openMenu={handleOpenMenu}
-              closeMenu={handleCloseMenu}
-            />
-          </Route>
+          <ProtectedRoute
+            exact path="/"
+            component={Main}
+            loggedIn={loggedIn}
+            menuIsOpened={menuIsOpened}
+            openMenu={handleOpenMenu}
+            closeMenu={handleCloseMenu}
+          />
 
           <Route exact path="/signin">
             <Login />
@@ -102,7 +141,6 @@ function App() {
           </Route>
 
         </Switch>
-
       </div>
     </CurrentUserContext.Provider>
   );
