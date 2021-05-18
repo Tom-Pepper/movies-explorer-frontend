@@ -27,6 +27,12 @@
   transition: opacity 0.1s ease-in-out 0.1s;
 }
 
+.form__button_disabled {
+  color: #A0A0A0;
+  background-color: #F5F5F5;
+  cursor: default;
+}
+
 .form__button:hover {
   opacity: 0.7;
 }

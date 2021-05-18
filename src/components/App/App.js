@@ -15,12 +15,14 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import { register, login, updateProfile, getProfile } from "../../utils/MainApi";
 import { getMovies, getBookmarkedMovies, unBookMarkMovie, bookmarkMovie } from "../../utils/MoviesApi";
+import Validator from "../../utils/Validator";
 
 function App() {
 
   const isLoggedIn = localStorage.getItem('isLoggedIn');
 
   // Хуки, стейты
+  const { handleOnChange, setIsValid, isValid, error, regData } = Validator();
   const [loggedIn, setLoggedIn] = useState(isLoggedIn);
 
   const [menuIsOpened, setMenuIsOpened] = useState(false);
@@ -28,6 +30,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const [submitError, setSubmitError] = useState('');
 
   const history = useHistory();
 
@@ -44,19 +48,71 @@ function App() {
             const loggedIn = localStorage.getItem('isLoggedIn');
             setLoggedIn(loggedIn);
             setCurrentUser(res);
+          } else {
+            localStorage.removeItem('isLoggedIn');
+            setLoggedIn(false);
           }
-          localStorage.removeItem('isLoggedIn');
-          setLoggedIn(false);
         })
-        .then((err) => console.log(`Произошла ошибка ${err.status}`));
+        .catch((err) => console.log(`Произошла ошибка ${err.status}`));
     }
   }, [loggedIn]);
 
   /**
-   * Регистрация пользователя
+   * Регистрация нового пользователя
    */
   function handleRegister(data) {
+    const { name, email, password } = data;
+    setIsValid(false);
+    setIsLoading(true);
 
+    return register(name, email, password)
+      .then((res) => {
+        if (res) {
+          handleLogin(data);
+          history.push('/signin');
+        }
+      })
+      .catch((err) => {
+        console.log(`Произошла ошибка: ${err.status}`);
+        setSubmitError(err.status);
+        history.push('/signup');
+      })
+      .finally(() => setIsLoading(false));
+  }
+
+  /**
+   * Авторизация пользователя
+   */
+  function handleLogin(data) {
+    const { email, password } = data;
+    setIsValid(false);
+    setIsLoading(true);
+
+    return login(email, password)
+      .then((res) => {
+        if (res) {
+          localStorage.setItem('jwt', res.token);
+          localStorage.setItem('isLoggedIn', true);
+          setLoggedIn(localStorage.getItem('isLoggedIn'));
+          history.push('/movies');
+        }
+      })
+      .catch((err) => {
+        console.log(`Произошла ошибка: ${err}`);
+        setSubmitError(err.status);
+      })
+      .finally(() => setIsLoading(false));
+  }
+
+  /**
+   * Выход из учетной записи
+   */
+  function handleLogout(evt) {
+    evt.preventDefault();
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('isLoggedIn');
+    setLoggedIn(localStorage.getItem('isLoggedIn'));
+    history.push('/');
   }
 
   // Обработчики
@@ -102,11 +158,27 @@ function App() {
           />
 
           <Route exact path="/signin">
-            <Login />
+            <Login
+              submitHandler={handleLogin}
+              regData={regData}
+              isLoading={isLoading}
+              handleOnChange={handleOnChange}
+              error={error}
+              isValid={isValid}
+              submitError={submitError}
+            />
           </Route>
 
           <Route exact path="/signup">
-            <Register />
+            <Register
+              submitHandler={handleRegister}
+              regData={regData}
+              isLoading={isLoading}
+              handleOnChange={handleOnChange}
+              error={error}
+              isValid={isValid}
+              submitError={submitError}
+            />
           </Route>
 
           <Route exact path="/movies">
@@ -133,6 +205,9 @@ function App() {
               menuIsOpened={menuIsOpened}
               openMenu={handleOpenMenu}
               closeMenu={handleCloseMenu}
+              logoutHandler={handleLogout}
+              submitError={submitError}
+              username={currentUser.name}
             />
           </Route>
 

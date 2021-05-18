@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import './Profile.css';
 import Header from "../Header/Header";
 
-function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn }) {
+function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn, logoutHandler, submitError, username }) {
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -22,7 +22,7 @@ function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn }) {
         closeMenu={closeMenu}
       />
 
-      <h2 className="register__title account__title">Привет, username!</h2>
+      <h2 className="register__title account__title">Привет, {username}!</h2>
       <form method="post" className="profile__form" name="profile-form" noValidate>
         <div className="profile__field-wrapper">
           <label className="profile__label">Имя
@@ -41,7 +41,7 @@ function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn }) {
             <div className="profile__form-actions-wrapper">
               <button className="profile__action-button profile__action-button_action_edit" onClick={handleEditProfile}>
                 Редактировать</button>
-              <button className="profile__action-button profile__action-button_action_logout">
+              <button className="profile__action-button profile__action-button_action_logout" onClick={logoutHandler}>
                 Выйти из аккаунта</button>
             </div>
           ) : (
