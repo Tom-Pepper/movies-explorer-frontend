@@ -1,11 +1,19 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import './Profile.css';
 import Header from "../Header/Header";
+import {checkAuth} from "../../utils/MainApi";
 
-function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn, logoutHandler, submitError, username }) {
+function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn, logoutHandler }) {
 
+  const token = localStorage.getItem('jwt');
   const [isEditing, setIsEditing] = useState(false);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    checkAuth(token)
+      .then((res) => setUser(res));
+  }, [])
 
   function handleEditProfile(e) {
     e.preventDefault();
@@ -22,7 +30,7 @@ function Profile({ menuIsOpened, openMenu, closeMenu, loggedIn, logoutHandler, s
         closeMenu={closeMenu}
       />
 
-      <h2 className="register__title account__title">Привет, {username}!</h2>
+      <h2 className="register__title account__title">Привет, {user.name}!</h2>
       <form method="post" className="profile__form" name="profile-form" noValidate>
         <div className="profile__field-wrapper">
           <label className="profile__label">Имя

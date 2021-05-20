@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 
 import './App.css';
 import Main from '../Main/Main';
@@ -9,20 +9,23 @@ import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import Profile from "../Profile/Profile";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import { register, login, updateProfile, getProfile } from "../../utils/MainApi";
+import {register, login, updateProfile, checkAuth} from "../../utils/MainApi";
 import { getMovies, getBookmarkedMovies, unBookMarkMovie, bookmarkMovie } from "../../utils/MoviesApi";
+
 import Validator from "../../utils/Validator";
 
 function App() {
 
   const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const storedMovies = JSON.parse(localStorage.getItem("storedMovies"));
+  const savedMoviesInStore = JSON.parse(localStorage.getItem("savedMovies"));
+  const { handleOnChange, errors, values, isValid, setIsValid } = Validator();
 
   // Хуки, стейты
-  const { handleOnChange, setIsValid, isValid, error, regData } = Validator();
   const [loggedIn, setLoggedIn] = useState(isLoggedIn);
 
   const [menuIsOpened, setMenuIsOpened] = useState(false);
@@ -33,6 +36,16 @@ function App() {
 
   const [submitError, setSubmitError] = useState('');
 
+  const [searchValue, setSearchValue] = React.useState("");
+
+  const [movies, setMovies] = React.useState(storedMovies);
+
+  const [savedMovies, setSavedMovies] = React.useState(savedMoviesInStore);
+
+  const [searchError, setSearchError] = React.useState("");
+
+  const [isShortMovie, setIsShortMovie] = React.useState(false);
+
   const history = useHistory();
 
   /**
@@ -42,40 +55,34 @@ function App() {
     const token = localStorage.getItem('jwt');
 
     if (token) {
-      getProfile(token)
+      checkAuth(token)
         .then((res) => {
           if (res) {
-            const loggedIn = localStorage.getItem('isLoggedIn');
-            setLoggedIn(loggedIn);
+            setLoggedIn(true);
             setCurrentUser(res);
-          } else {
-            localStorage.removeItem('isLoggedIn');
-            setLoggedIn(false);
+            history.push('/')
           }
         })
-        .catch((err) => console.log(`Произошла ошибка ${err.status}`));
+        .catch((err) => console.log(`Произошла ошибка ${err}`));
     }
-  }, [loggedIn]);
+  }, []);
+
+  // ============== Блок регистрации, авторизации и редактрования данных пользователя =============================
 
   /**
    * Регистрация нового пользователя
    */
   function handleRegister(data) {
-    const { name, email, password } = data;
-    setIsValid(false);
     setIsLoading(true);
-
-    return register(name, email, password)
-      .then((res) => {
-        if (res) {
-          handleLogin(data);
-          history.push('/signin');
-        }
+    setIsValid(true);
+    register(data.username, data.email, data.password)
+      .then(() => {
+        handleLogin(data);
+        setCurrentUser(data.username);
       })
       .catch((err) => {
-        console.log(`Произошла ошибка: ${err.status}`);
-        setSubmitError(err.status);
-        history.push('/signup');
+        console.log(`Произошла ошибка: ${err}`);
+        setSubmitError(err);
       })
       .finally(() => setIsLoading(false));
   }
@@ -84,24 +91,24 @@ function App() {
    * Авторизация пользователя
    */
   function handleLogin(data) {
-    const { email, password } = data;
-    setIsValid(false);
     setIsLoading(true);
-
-    return login(email, password)
+    setIsValid(true);
+    login(data.email, data.password)
       .then((res) => {
-        if (res) {
+        if (res.token) {
+          setLoggedIn(true);
+          setCurrentUser(data.username);
           localStorage.setItem('jwt', res.token);
-          localStorage.setItem('isLoggedIn', true);
-          setLoggedIn(localStorage.getItem('isLoggedIn'));
-          history.push('/movies');
         }
       })
       .catch((err) => {
         console.log(`Произошла ошибка: ${err}`);
-        setSubmitError(err.status);
+        setSubmitError(err);
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+        history.push('/movies');
+      });
   }
 
   /**
@@ -110,12 +117,32 @@ function App() {
   function handleLogout(evt) {
     evt.preventDefault();
     localStorage.removeItem('jwt');
-    localStorage.removeItem('isLoggedIn');
-    setLoggedIn(localStorage.getItem('isLoggedIn'));
+    localStorage.removeItem('savedMovies');
+    localStorage.removeItem('foundMovies');
+    localStorage.removeItem('storedMovies');
+    setLoggedIn(false);
     history.push('/');
   }
 
-  // Обработчики
+  /**
+   * Функция редактирования данных профиля
+   */
+  function handleEditProfile(data, setIsEditing, setPopupIsOpened) {
+    updateProfile(data.name, data.email)
+      .then((res) => setCurrentUser(res))
+      .catch((err) => {
+        console.log(`Произошла ошибка ${err.status}`);
+        setSubmitError(err.status);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setIsEditing(false);
+        setPopupIsOpened(true);
+      });
+  }
+
+  // ============== Блок обработчиков =============================
+
 
   /**
    * Функция открытия бургер-меню
@@ -143,6 +170,7 @@ function App() {
     }
   }
 
+  // ============== Рендеринг =============================
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -158,27 +186,35 @@ function App() {
           />
 
           <Route exact path="/signin">
-            <Login
-              submitHandler={handleLogin}
-              regData={regData}
-              isLoading={isLoading}
-              handleOnChange={handleOnChange}
-              error={error}
-              isValid={isValid}
-              submitError={submitError}
-            />
+            {loggedIn ? (
+              <Redirect to="/" />
+            ) : (
+              <Login
+                onLogin={handleLogin}
+                values={values}
+                isLoading={isLoading}
+                handleOnChange={handleOnChange}
+                errors={errors}
+                isValid={isValid}
+                submitError={submitError}
+              />
+            )}
           </Route>
 
           <Route exact path="/signup">
-            <Register
-              submitHandler={handleRegister}
-              regData={regData}
-              isLoading={isLoading}
-              handleOnChange={handleOnChange}
-              error={error}
-              isValid={isValid}
-              submitError={submitError}
-            />
+            {loggedIn ? (
+              <Redirect to="/" />
+            ) : (
+              <Register
+                onRegister={handleRegister}
+                handleOnChange={handleOnChange}
+                values={values}
+                isLoading={isLoading}
+                errors={errors}
+                isValid={isValid}
+                submitError={submitError}
+              />
+            )}
           </Route>
 
           <Route exact path="/movies">
@@ -187,6 +223,7 @@ function App() {
               menuIsOpened={menuIsOpened}
               openMenu={handleOpenMenu}
               closeMenu={handleCloseMenu}
+              user={currentUser}
             />
           </Route>
 
@@ -207,7 +244,6 @@ function App() {
               closeMenu={handleCloseMenu}
               logoutHandler={handleLogout}
               submitError={submitError}
-              username={currentUser.name}
             />
           </Route>
 

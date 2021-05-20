@@ -1,30 +1,23 @@
 /**
  * Валидация полей ввода в формах
  */
-import React, {useCallback, useState} from 'react';
+import {useCallback, useState} from 'react';
 
 function Validator() {
-  const [error, setError] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
+  const [errors, setErrors] = useState({});
 
-  const [regData, setRegData] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
+  const [values, setValues] = useState({});
 
   const [isValid, setIsValid] = useState(false);
 
   /**
-   * Функция для считывания данных с инпутов
+   * Функция для изменения данных в инпутах
    */
   const handleOnChange = (evt) => {
-    const { name, value, validationMsg } = evt.target;
-    setError({ ...error, [name]: validationMsg });
-    setRegData({ ...regData, [name]: value });
+    const { name, value } = evt.target;
+
+    setErrors({ ...errors, [name]: evt.target.validationMessage });
+    setValues({ ...values, [name]: value });
     setIsValid(evt.target.closest('form').checkValidity());
   }
 
@@ -33,14 +26,14 @@ function Validator() {
    */
   const resetForm = useCallback(
     (clearedData = {}, clearedValidation = false) => {
-      setRegData(clearedData);
-      setError(clearedData);
+      setValues(clearedData);
+      setErrors(clearedData);
       setIsValid(clearedValidation);
     },
-    [setIsValid, setError, setRegData]
+    [setValues, setErrors, setIsValid]
   );
 
-  return { handleOnChange, resetForm, setIsValid, isValid, error, regData };
+  return { handleOnChange, resetForm, setIsValid, isValid, errors, values, setValues };
 }
 
 export default Validator;

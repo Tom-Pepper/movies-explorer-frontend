@@ -31,6 +31,7 @@
 
 .input__field_state_error {
   color: #FF3055;
+  border-color: #FF3055;
 }
 
 .input__error {

@@ -7,34 +7,34 @@ import Form from "../Form/Form";
 import Input from "../Input/Input";
 
 function Register({
-                    submitHandler,
-                    regData,
-                    isLoading,
+                    onRegister,
                     handleOnChange,
-                    error,
+                    values,
+                    isLoading,
+                    errors,
                     isValid,
                     submitError,
                   }) {
 
-  const formHandler = (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
-    submitHandler(regData);
+    onRegister(values);
   }
 
   /**
    * Обработка статуса ошибок для передачи ошибки в валидацию
    */
   const errorStatus = (status) => {
-    if(status === 400) {
+    if(status === '400') {
       return "При регистрации что-то пошло не так..."
     }
-    if(status === 409) {
+    if(status === '409') {
       return "Пользователь с таким email уже существует"
     }
-    if(status === 500) {
+    if(status === '500') {
       return "Произошла ошибка на сервере"
     }
-    if(status === 404) {
+    if(status === '404') {
       return "Страница не найдена"
     }
   }
@@ -50,20 +50,20 @@ function Register({
         text="Уже зарегистрированы?"
         url="/signin"
         linkText="Войти"
-        submitHandler={formHandler}
-        isLoading={isLoading}
+        onSubmit={handleSubmit}
         isValid={isValid}
         errorMsg={errorMsg}
+        isLoading={isLoading}
       >
         <Input
           id="user-name"
           type="text"
-          name="name"
+          name="username"
           inputTitle="Имя"
           minLength="2"
           maxLength="30"
-          errorText={error.name}
-          regData={regData.name || ''}
+          errorText={errors.username}
+          value={values.username || ''}
           onChange={handleOnChange}
           isValid={isValid}
         />
@@ -74,8 +74,8 @@ function Register({
           inputTitle="E-mail"
           minLength="7"
           maxLength="200"
-          errorText={error.email}
-          regData={regData.email}
+          errorText={errors.email}
+          value={values.email || ''}
           onChange={handleOnChange}
           isValid={isValid}
         />
@@ -86,8 +86,8 @@ function Register({
           inputTitle="Пароль"
           minLength="8"
           maxLength="200"
-          errorText={error.password}
-          regData={regData.password}
+          errorText={errors.password}
+          value={values.password || ''}
           onChange={handleOnChange}
           isValid={isValid}
         />

@@ -2,7 +2,14 @@
  * Константные переменные и ссылки
  */
 
-export const BASE_URL = 'https://api.pepperjs.nomoredomains.club';
-export const MOVIES_API_URL = 'https://api.nomoreparties.co/beatfilm-movies';
-export const MOVIES_IMAGE_URL = 'https://api.nomoreparties.co';
-export const SHORT_MOVIE_DURATION = 40;
+const BASE_URL = 'https://api.pepperjs.nomoredomains.club';
+const MOVIES_API_URL = 'https://api.nomoreparties.co/beatfilm-movies';
+const MOVIES_IMAGE_URL = 'https://api.nomoreparties.co';
+const SHORT_MOVIE_DURATION = 40;
+
+export {
+  BASE_URL,
+  MOVIES_API_URL,
+  MOVIES_IMAGE_URL,
+  SHORT_MOVIE_DURATION,
+}
