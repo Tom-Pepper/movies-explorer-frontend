@@ -51,19 +51,22 @@ function App() {
   /**
    * Проверка токена и установка текущего пользователя
    */
+  function checkUserData(token) {
+    checkAuth(token)
+      .then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          setCurrentUser(res);
+        }
+      })
+      .catch((err) => console.log(`Произошла ошибка: ${err}`));
+  }
+
   useEffect(() => {
     const token = localStorage.getItem('jwt');
 
     if (token) {
-      checkAuth(token)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            setCurrentUser(res);
-            history.push('/')
-          }
-        })
-        .catch((err) => console.log(`Произошла ошибка ${err}`));
+      checkUserData(token);
     }
   }, []);
 
@@ -96,8 +99,7 @@ function App() {
     login(data.email, data.password)
       .then((res) => {
         if (res.token) {
-          setLoggedIn(true);
-          setCurrentUser(data.username);
+          checkUserData(res.token);
           localStorage.setItem('jwt', res.token);
         }
       })
@@ -128,8 +130,11 @@ function App() {
    * Функция редактирования данных профиля
    */
   function handleEditProfile(data, setIsEditing, setPopupIsOpened) {
+    setIsLoading(true);
     updateProfile(data.name, data.email)
-      .then((res) => setCurrentUser(res))
+      .then((res) => {
+        setCurrentUser(res);
+      })
       .catch((err) => {
         console.log(`Произошла ошибка ${err.status}`);
         setSubmitError(err.status);
@@ -217,35 +222,41 @@ function App() {
             )}
           </Route>
 
-          <Route exact path="/movies">
-            <Movies
-              loggedIn={loggedIn}
-              menuIsOpened={menuIsOpened}
-              openMenu={handleOpenMenu}
-              closeMenu={handleCloseMenu}
-              user={currentUser}
-            />
-          </Route>
+          <ProtectedRoute
+            exact path="/movies"
+            component={Movies}
+            loggedIn={loggedIn}
+            menuIsOpened={menuIsOpened}
+            openMenu={handleOpenMenu}
+            closeMenu={handleCloseMenu}
+            user={currentUser}
+          />
 
-          <Route exact path="/saved-movies">
-            <SavedMovies
-              loggedIn={loggedIn}
-              menuIsOpened={menuIsOpened}
-              openMenu={handleOpenMenu}
-              closeMenu={handleCloseMenu}
-            />
-          </Route>
+          <ProtectedRoute
+            exact path="/saved-movies"
+            component={SavedMovies}
+            loggedIn={loggedIn}
+            menuIsOpened={menuIsOpened}
+            openMenu={handleOpenMenu}
+            closeMenu={handleCloseMenu}
+          />
 
-          <Route exact path="/profile">
-            <Profile
-              loggedIn={loggedIn}
-              menuIsOpened={menuIsOpened}
-              openMenu={handleOpenMenu}
-              closeMenu={handleCloseMenu}
-              logoutHandler={handleLogout}
-              submitError={submitError}
-            />
-          </Route>
+          <ProtectedRoute
+            exact path="/profile"
+            component={Profile}
+            onSubmit={handleEditProfile}
+            loggedIn={loggedIn}
+            menuIsOpened={menuIsOpened}
+            openMenu={handleOpenMenu}
+            closeMenu={handleCloseMenu}
+            onLogout={handleLogout}
+            submitError={submitError}
+            values={values}
+            isLoading={isLoading}
+            handleOnChange={handleOnChange}
+            isValid={isValid}
+            errors={errors}
+          />
 
           <Route path="*">
             <NotFoundPage />

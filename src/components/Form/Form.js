@@ -17,6 +17,9 @@ function Form({ name, buttonText, linkText, url, text, children, onSubmit, isVal
       <span className={`input__error ${errorMsg && "input__error_visible"}`}>
         {errorMsg}
       </span>
+      <span className={`input__error ${!isValid && "input__error_visible"}`}>
+        Одно из полей не заполнено или заполнено не корректно
+      </span>
       <button className={`form__button ${!isValid && 'form__button_disabled'}`} disabled={!isValid}>
         {buttonText}
       </button>

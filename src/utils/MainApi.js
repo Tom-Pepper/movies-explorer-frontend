@@ -44,7 +44,7 @@ export const checkAuth = (token) => {
     .then((res) => getResponse(res));
 };
 
-export const updateProfile = (name, email) => {
+export const updateProfile = (username, email) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: {
@@ -52,7 +52,7 @@ export const updateProfile = (name, email) => {
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
     },
     body: JSON.stringify({
-      name: name,
+      name: username,
       email: email,
     }),
   })
