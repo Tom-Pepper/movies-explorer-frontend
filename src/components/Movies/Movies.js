@@ -7,23 +7,43 @@ import Search from "./Search/Search";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 
-function Movies({ menuIsOpened, openMenu, closeMenu, isBookmarkPage, loggedIn }) {
+function Movies(props) {
   return(
     <section className="movies">
+
       <Header
-        loggedIn={loggedIn}
+        loggedIn={props.loggedIn}
         isProfilePageActive={true}
-        menuIsOpened={menuIsOpened}
-        openMenu={openMenu}
-        closeMenu={closeMenu}
+        menuIsOpened={props.menuIsOpened}
+        openMenu={props.openMenu}
+        closeMenu={props.closeMenu}
       />
+
       <div className="movies__search-wrapper">
-        <Search />
+        <Search
+          onSubmit={props.onSubmit}
+          onChange={props.onChange}
+          handleCheck={props.handleShortCheck}
+          searchValue={props.searchValue}
+        />
       </div>
-      <FilterCheckbox checkboxName={'Короткометражки'}/>
-      <MoviesCardList isBookmarkPage={isBookmarkPage}/>
+
+      <FilterCheckbox
+        checkboxName={'Короткометражки'}
+        handleCheck={props.handleShortCheck}
+      />
+
+      <MoviesCardList
+        isInBookmark={false}
+        movies={props.movies}
+        isLoading={props.isLoading}
+        searchError={props.searchError}
+        onSaveMovie={props.onSaveMovie}
+        isShortMovie={props.isShortMovie}
+      />
+
       <div className="movies__footer-wrapper">
-        <Footer moviesPage={true}/>
+        <Footer moviesPage={true} />
       </div>
     </section>
   );

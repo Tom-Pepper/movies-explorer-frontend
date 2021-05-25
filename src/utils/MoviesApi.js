@@ -12,7 +12,7 @@ const getResponse = (res) => {
  * Получение списка фильмов с beatfilm API
  */
 export const getMovies = () => {
-  return fetch(`${MOVIES_API_URL}/movies`)
+  return fetch(`${MOVIES_API_URL}/`)
     .then((res) => getResponse(res));
 };
 

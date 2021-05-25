@@ -3,8 +3,22 @@ import React, {useContext, useState} from 'react';
 import './Profile.css';
 import Header from "../Header/Header";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
+import Popup from "../Popup/Popup";
 
-function Profile(props) {
+function Profile({
+                   values,
+                   onSubmit,
+                   submitError,
+                   loggedIn,
+                   menuIsOpened,
+                   openMenu,
+                   closeMenu,
+                   isValid,
+                   handleOnChange,
+                   errors,
+                   onLogout,
+                   isLoading,
+                 }) {
   const user = useContext(CurrentUserContext);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -17,7 +31,11 @@ function Profile(props) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    props.onSubmit(props.values, setIsEditing, setPopupIsOpened);
+    onSubmit(values, setIsEditing, setPopupIsOpened);
+  }
+
+  function closePopup() {
+    setPopupIsOpened(false);
   }
 
   /**
@@ -35,17 +53,17 @@ function Profile(props) {
     }
   }
 
-  const errorMsg = errorStatus(props.submitError);
+  const errorMsg = errorStatus(submitError);
 
   return(
     <div className="profile">
 
       <Header
-        loggedIn={props.loggedIn}
+        loggedIn={loggedIn}
         isProfilePageActive={true}
-        menuIsOpened={props.menuIsOpened}
-        openMenu={props.openMenu}
-        closeMenu={props.closeMenu}
+        menuIsOpened={menuIsOpened}
+        openMenu={openMenu}
+        closeMenu={closeMenu}
       />
 
       <h2 className="register__title account__title">Привет, {user.name}!</h2>
@@ -60,37 +78,35 @@ function Profile(props) {
           </label>
           <input
             type="text"
-            className={`profile__input ${!props.isValid && "input__field_state_error"}`}
+            className={`profile__input ${!isValid && "input__field_state_error"}`}
             disabled={!isEditing}
             name="name"
             placeholder={user.name || "Введите новое имя"}
-            onChange={props.handleOnChange}
-            value={props.values.name || ''}
+            onChange={handleOnChange}
+            value={values.name || ''}
             minLength="2"
             maxLength="30"
             required
           />
         </div>
-        <span className={`input__error ${!props.isValid && "input__error_visible"}`}>{props.errors.name}</span>
+        <span className={`input__error ${!isValid && "input__error_visible"}`}>{errors.name}</span>
         <div className="profile__field-wrapper">
           <label className="profile__label">Email
           </label>
           <input
             type="text"
-            className={`profile__input ${!props.isValid && "input__field_state_error"}`}
+            className={`profile__input ${!isValid && "input__field_state_error"}`}
             disabled={!isEditing}
             name="email"
             placeholder={user.email || "Введите новый email"}
-            onChange={props.handleOnChange}
-            value={props.values.email || ''}
+            onChange={handleOnChange}
+            value={values.email || ''}
             minLength="7"
             maxLength="200"
             required
           />
         </div>
-        <span className={`input__error ${!props.isValid && "input__error_visible"}`}>{props.errors.email}</span>
-        <span className={`input__error ${!props.isValid && "input__error_visible"}`}>Одно из полей не заполнено или
-          заполнено не корректно</span>
+        <span className={`input__error ${!isValid && "input__error_visible"}`}>{errors.email}</span>
         <div className="profile__form-actions">
           {!isEditing ? (
             <div className="profile__form-actions-wrapper">
@@ -102,7 +118,7 @@ function Profile(props) {
               <button
                 type="button"
                 className="profile__action-button profile__action-button_action_logout"
-                onClick={props.onLogout}
+                onClick={onLogout}
               >Выйти из аккаунта</button>
             </div>
           ) : (
@@ -110,12 +126,18 @@ function Profile(props) {
               <button
                 className="profile__action-button profile__action-button_action_save"
                 type="submit"
-                disabled={!props.isValid}
-              >{props.isLoading ? 'Сохранение...' : 'Сохранить'}</button>
+                disabled={!isValid}
+              >{isLoading ? 'Сохранение...' : 'Сохранить'}</button>
             </div>
           )}
         </div>
       </form>
+
+      {/*<Popup*/}
+      {/*  isOpened={popupIsOpened}*/}
+      {/*  onClose={closePopup}*/}
+      {/*  title="Выйти из учетной записи?"*/}
+      {/*/>*/}
 
     </div>
   );

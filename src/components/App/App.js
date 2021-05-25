@@ -17,6 +17,12 @@ import {register, login, updateProfile, checkAuth} from "../../utils/MainApi";
 import { getMovies, getBookmarkedMovies, unBookMarkMovie, bookmarkMovie } from "../../utils/MoviesApi";
 
 import Validator from "../../utils/Validator";
+import {
+  EMPTY_REQUEST_ERROR,
+  ESC_KEY,
+  FAILED_REQUEST_ERROR,
+  NO_RESULTS_ERROR
+} from "../../utils/constants";
 
 function App() {
 
@@ -59,7 +65,7 @@ function App() {
           setCurrentUser(res);
         }
       })
-      .catch((err) => console.log(`Произошла ошибка: ${err}`));
+      .catch((err) => console.log(`Произошла ошибка в функции checkUserData: ${err}`));
   }
 
   useEffect(() => {
@@ -84,7 +90,7 @@ function App() {
         setCurrentUser(data.username);
       })
       .catch((err) => {
-        console.log(`Произошла ошибка: ${err}`);
+        console.log(`Произошла ошибка в функции handleRegister: ${err}`);
         setSubmitError(err);
       })
       .finally(() => setIsLoading(false));
@@ -104,7 +110,7 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(`Произошла ошибка: ${err}`);
+        console.log(`Произошла ошибка в функции handleLogin: ${err}`);
         setSubmitError(err);
       })
       .finally(() => {
@@ -120,7 +126,7 @@ function App() {
     evt.preventDefault();
     localStorage.removeItem('jwt');
     localStorage.removeItem('savedMovies');
-    localStorage.removeItem('foundMovies');
+    localStorage.removeItem('foundedMovies');
     localStorage.removeItem('storedMovies');
     setLoggedIn(false);
     history.push('/');
@@ -136,7 +142,7 @@ function App() {
         setCurrentUser(res);
       })
       .catch((err) => {
-        console.log(`Произошла ошибка ${err.status}`);
+        console.log(`Произошла ошибка в функции handleEditProfile: ${err.status}`);
         setSubmitError(err.status);
       })
       .finally(() => {
@@ -155,14 +161,25 @@ function App() {
   function handleOpenMenu() {
     setMenuIsOpened(true);
     window.addEventListener('click', handleClosePopupWithOverlayClick);
+    window.addEventListener('keydown', handleClosePopupWithEsc);
   }
 
   /**
-   * Функция закрытия бургер-меню
+   * Функция закрытия бургер-меню и поп-апов
    */
   function handleCloseMenu() {
     setMenuIsOpened(false);
     window.removeEventListener('click', handleClosePopupWithOverlayClick);
+    window.removeEventListener('keydown', handleClosePopupWithEsc);
+  }
+
+  /**
+   * Закрытие поп-апов с помощью Esc
+   */
+  function handleClosePopupWithEsc(event) {
+    if (event.keyCode === ESC_KEY) {
+      handleCloseMenu();
+    }
   }
 
   /**
@@ -170,9 +187,182 @@ function App() {
    * @param evt — событие, где отслеживается клик
    */
   function handleClosePopupWithOverlayClick(evt) {
-    if (evt.target.classList.contains('navigation__wrapper')) {
+    const target = evt.target.classList;
+    if ((target.contains('navigation__wrapper')) || (target.contains('popup'))) {
       handleCloseMenu();
     }
+  }
+
+  // ============== Блок логики Beat Films ================
+
+  /**
+   * Фильтрация фильмов по запросу
+   */
+  function movieFilter(movies) {
+    return new Promise((resolve, reject) => {
+      if (searchValue === '') {
+        return reject(EMPTY_REQUEST_ERROR);
+      }
+      if (!movies) {
+        return reject(FAILED_REQUEST_ERROR);
+      }
+
+      const moviesData = movies.filter((movie) => {
+        return movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
+      });
+
+      if (moviesData.length === 0) {
+        return reject(NO_RESULTS_ERROR);
+      }
+      localStorage.setItem('storedMovies', JSON.stringify(moviesData));
+      setMovies(moviesData);
+      resolve();
+    });
+  }
+
+  /**
+   * Функция поиска фильмов
+   */
+  function searchMovies(evt) {
+    evt.preventDefault();
+    setIsLoading(true);
+    setSearchError('');
+    setMovies([]);
+
+    if (localStorage.getItem('foundedMovies') === '') {
+      getMovies()
+        .then((movies) => {
+          localStorage.setItem('foundedMovies', JSON.stringify(movies));
+          movieFilter(movies)
+            .then(() => {})
+            .catch((err) => {
+              console.log(`Произошла ошибка в функции searchMovies (movieFilter): ${err}`);
+              setSearchError(err);
+            })
+            .finally(() => {
+              setIsLoading(false);
+            });
+        })
+        .catch((err) => {
+          console.log(`Произошла ошибка в функции searchMovies (getMovies): ${err}`);
+          setSearchError(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      movieFilter(JSON.parse(localStorage.getItem('foundedMovies')))
+        .then(() => {})
+        .catch((err) => setSearchError(err))
+        .finally(() => setIsLoading(false));
+    }
+  }
+
+  /**
+   * Поиск по сохраненным в закладки фильмам
+   */
+  function searchBookmarkedMovies(evt) {
+    evt.preventDefault();
+    setIsLoading(true);
+    setSearchError('');
+    setSavedMovies(savedMoviesInStore);
+    getBookmarkedMovies()
+      .then((movies) => {
+        if (searchValue === '') {
+          throw new Error(EMPTY_REQUEST_ERROR);
+        }
+        if (!movies) {
+          throw new Error(FAILED_REQUEST_ERROR);
+        }
+
+        const foundedMovies = movies.filter((movie) => {
+          return movie.nameRU.toLowerCase().includes(searchValue.toLowerCase());
+        });
+
+        if (foundedMovies.length === 0) {
+          throw new Error(NO_RESULTS_ERROR);
+        }
+
+        setSavedMovies(foundedMovies);
+
+      })
+      .catch((err) => {
+        console.log(`Произошла ошибка в функции searchBookmarkedMovies (getBookmarkedMovies): ${err}`);
+        setSearchError(err.message);
+      })
+      .finally(() => setIsLoading(false));
+  }
+
+  /**
+   * Функция считывания данных, введенных в строку поиска
+   */
+  function handleSearchInput(evt) {
+    setSearchValue(evt.target.value);
+  }
+
+  /**
+   * Сохранение в закладки / удаление фильма из закладок
+   */
+  function handleBookMarkMovie(movie, isBookmarked, setIsBookmarked) {
+    if (isBookmarked) {
+      getBookmarkedMovies()
+        .then((res) => {
+          Promise.resolve(res.find((item) => item.movieId === movie.id))
+            .then((movieId) => {
+              unBookMarkMovie(movieId._id)
+                .then(() => {
+                  const updatedMoviesList = savedMovies.filter((i) => i._id !== movieId._id);
+                  localStorage.setItem('savedMovies', JSON.stringify(updatedMoviesList));
+                  const movies = JSON.parse(localStorage.getItem('savedMovies'));
+                  setSavedMovies(movies);
+                  setIsBookmarked(false);
+                })
+                .catch((err) => console.log(`Произошла ошибка в функции handleBookMarkMovie (unBookMarkMovie) ${err}`));
+
+            })
+            .catch((err) => console.log(`Произошла ошибка в функции handleBookMarkMovie (Promise) ${err}`));
+
+        })
+        .catch((err) => console.log(`Произошла ошибка в функции handleBookMarkMovie (getBookmarkedMovies) ${err}`));
+
+    } else {
+      setIsBookmarked(true);
+      bookmarkMovie(movie)
+        .then(() => {
+          getBookmarkedMovies()
+            .then((res) => {
+              localStorage.setItem('savedMovies', JSON.stringify(res));
+              const movies = JSON.parse(localStorage.getItem('savedMovies'));
+              setSavedMovies(movies);
+              setIsBookmarked(true);
+            })
+            .catch((err) => console.log(`Произошла ошибка в функции handleBookMarkMovie (getBookmarkedMovies) ${err}`));
+
+        })
+        .catch((err) => console.log(`Произошла ошибка в функции handleBookMarkMovie (bookmarkMovie) ${err}`));
+
+    }
+  }
+
+  /**
+   * Удаление фильма из избранного
+   */
+  const handleUnBookMarkMovie = (movie) => {
+    unBookMarkMovie(movie._id)
+      .then((res) => {
+        const updatedMoviesList = savedMovies.filter((item) => item._id !== movie._id);
+        localStorage.setItem('savedMovies', JSON.stringify(updatedMoviesList));
+        const movies = JSON.parse(localStorage.getItem('savedMovies'));
+        setSavedMovies(movies);
+      })
+      .catch((err) => console.log(`Произошла ошибка в функции handleUnBookMarkMovie ${err}`));
+  }
+
+  /**
+   * Фильтрация короткометражек (для чекбокса)
+   */
+  function checkIsShortMovie(evt) {
+    evt.target.checked ? setIsShortMovie(true) : setIsShortMovie(false);
   }
 
   // ============== Рендеринг =============================
@@ -181,14 +371,14 @@ function App() {
       <div className="page">
         <Switch>
 
-          <ProtectedRoute
-            exact path="/"
-            component={Main}
-            loggedIn={loggedIn}
-            menuIsOpened={menuIsOpened}
-            openMenu={handleOpenMenu}
-            closeMenu={handleCloseMenu}
-          />
+          <Route exact path="/">
+            <Main
+              loggedIn={loggedIn}
+              menuIsOpened={menuIsOpened}
+              openMenu={handleOpenMenu}
+              closeMenu={handleCloseMenu}
+            />
+          </Route>
 
           <Route exact path="/signin">
             {loggedIn ? (
@@ -226,10 +416,19 @@ function App() {
             exact path="/movies"
             component={Movies}
             loggedIn={loggedIn}
+            movies={movies}
             menuIsOpened={menuIsOpened}
             openMenu={handleOpenMenu}
             closeMenu={handleCloseMenu}
-            user={currentUser}
+            isLoading={isLoading}
+            onSubmit={searchMovies}
+            onChange={handleSearchInput}
+            onSaveMovie={handleBookMarkMovie}
+            handleShortCheck={checkIsShortMovie}
+            isShortMovie={isShortMovie}
+            searchError={searchError}
+            searchValue={searchValue}
+            savedMovies={savedMovies}
           />
 
           <ProtectedRoute
@@ -239,6 +438,7 @@ function App() {
             menuIsOpened={menuIsOpened}
             openMenu={handleOpenMenu}
             closeMenu={handleCloseMenu}
+            onDeleteMovie={handleUnBookMarkMovie}
           />
 
           <ProtectedRoute

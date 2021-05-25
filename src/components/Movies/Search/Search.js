@@ -2,11 +2,26 @@ import React from 'react';
 
 import './Search.css';
 
-function Search() {
+function Search(props) {
   return(
-    <form className="search" name="search">
-      <input type="text" placeholder="Фильм" className="search__input"/>
-      <button className="search__input-button"/>
+    <form
+      onSubmit={props.onSubmit}
+      className="search"
+      name="search"
+      noValidate
+    >
+      <input
+        type="text"
+        placeholder="Фильм"
+        className="search__input"
+        value={props.searchValue || ''}
+        onChange={props.onChange}
+        required
+      />
+      <button
+        type="submit"
+        className="search__input-button"
+      />
     </form>
   );
 }
