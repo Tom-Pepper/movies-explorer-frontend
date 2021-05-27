@@ -7,39 +7,41 @@ import Search from "./Search/Search";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 
-function Movies(props) {
+function Movies({ loggedIn, menuIsOpened, openMenu, closeMenu,
+                  onSubmit, onChange, handleShortCheck, searchValue,
+                  searchError, isShortMovie, movies, isLoading, onSaveMovie }) {
   return(
     <section className="movies">
 
       <Header
-        loggedIn={props.loggedIn}
+        loggedIn={loggedIn}
         isProfilePageActive={true}
-        menuIsOpened={props.menuIsOpened}
-        openMenu={props.openMenu}
-        closeMenu={props.closeMenu}
+        menuIsOpened={menuIsOpened}
+        openMenu={openMenu}
+        closeMenu={closeMenu}
       />
 
       <div className="movies__search-wrapper">
         <Search
-          onSubmit={props.onSubmit}
-          onChange={props.onChange}
-          handleCheck={props.handleShortCheck}
-          searchValue={props.searchValue}
+          onSubmit={onSubmit}
+          onChange={onChange}
+          handleCheck={handleShortCheck}
+          searchValue={searchValue}
         />
       </div>
 
       <FilterCheckbox
         checkboxName={'Короткометражки'}
-        handleCheck={props.handleShortCheck}
+        handleCheck={handleShortCheck}
       />
 
       <MoviesCardList
         isInBookmark={false}
-        movies={props.movies}
-        isLoading={props.isLoading}
-        searchError={props.searchError}
-        onSaveMovie={props.onSaveMovie}
-        isShortMovie={props.isShortMovie}
+        movies={movies}
+        isLoading={isLoading}
+        searchError={searchError}
+        onSaveMovie={onSaveMovie}
+        isShortMovie={isShortMovie}
       />
 
       <div className="movies__footer-wrapper">

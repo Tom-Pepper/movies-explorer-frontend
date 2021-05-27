@@ -200,9 +200,6 @@ function App() {
    */
   function movieFilter(movies) {
     return new Promise((resolve, reject) => {
-      if (searchValue === '') {
-        return reject(EMPTY_REQUEST_ERROR);
-      }
       if (!movies) {
         return reject(FAILED_REQUEST_ERROR);
       }
@@ -229,7 +226,7 @@ function App() {
     setSearchError('');
     setMovies([]);
 
-    if (localStorage.getItem('foundedMovies') === '') {
+    if (localStorage.getItem('foundedMovies') === '' || localStorage.getItem('foundedMovies') === null) {
       getMovies()
         .then((movies) => {
           localStorage.setItem('foundedMovies', JSON.stringify(movies));
