@@ -5,8 +5,8 @@
 export const ESC_KEY = 27;
 export const SHORT_MOVIE_DURATION = 40;
 
-// export const BASE_URL = 'https://api.pepperjs.nomoredomains.club';
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://api.pepperjs.nomoredomains.club';
+// export const BASE_URL = 'http://localhost:3000';
 export const MOVIES_API_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 export const MOVIES_IMAGE_URL = 'https://api.nomoreparties.co';
 

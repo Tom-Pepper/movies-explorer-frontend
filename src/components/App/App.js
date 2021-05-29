@@ -221,12 +221,13 @@ function App() {
    * Функция поиска фильмов
    */
   function searchMovies(evt) {
+    const foundedMovies = localStorage.getItem('foundedMovies');
     evt.preventDefault();
     setIsLoading(true);
     setSearchError('');
     setMovies([]);
 
-    if (localStorage.getItem('foundedMovies') === '' || localStorage.getItem('foundedMovies') === null) {
+    if (foundedMovies === '' || foundedMovies === null) {
       getMovies()
         .then((movies) => {
           localStorage.setItem('foundedMovies', JSON.stringify(movies));

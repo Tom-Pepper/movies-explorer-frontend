@@ -79,7 +79,6 @@ function MoviesCardList(props) {
   /**
    * Фильтр фильмов по продолжительности (короткометражки)
    * @param movie — принимает фильм и сравнивает его продолжительность с константой
-   * @returns {*}
    */
   function filterShortMovies(movie) {
     return movie.filter((item) => item.duration <= SHORT_MOVIE_DURATION)
