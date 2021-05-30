@@ -20,6 +20,7 @@
 }
 
 .nav-tab__link {
+  cursor: pointer;
   text-decoration: none;
   color: #ffffff;
   transition: opacity 0.1s ease-in-out 0.1s;
