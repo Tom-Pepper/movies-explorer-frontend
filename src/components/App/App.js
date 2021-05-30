@@ -305,7 +305,7 @@ function App() {
     if (isBookmarked) {
       getBookmarkedMovies()
         .then((res) => {
-          Promise.resolve(res.find((item) => item.movieId === movie.id))
+          Promise.resolve(res.movies.find((item) => item.movieId === movie.id))
             .then((movieId) => {
               unBookMarkMovie(movieId._id)
                 .then(() => {
@@ -347,7 +347,7 @@ function App() {
    */
   const handleUnBookMarkMovie = (movie) => {
     unBookMarkMovie(movie._id)
-      .then((res) => {
+      .then(() => {
         const updatedMoviesList = savedMovies.filter((item) => item._id !== movie._id);
         localStorage.setItem('savedMovies', JSON.stringify(updatedMoviesList));
         const movies = JSON.parse(localStorage.getItem('savedMovies'));
@@ -437,6 +437,9 @@ function App() {
             openMenu={handleOpenMenu}
             closeMenu={handleCloseMenu}
             onDeleteMovie={handleUnBookMarkMovie}
+            onSubmit={searchBookmarkedMovies}
+            onChange={handleSearchInput}
+            searchValue={searchValue}
           />
 
           <ProtectedRoute

@@ -12,6 +12,9 @@ function SavedMovies(props) {
       menuIsOpened={props.menuIsOpened}
       openMenu={props.openMenu}
       closeMenu={props.closeMenu}
+      onSubmit={props.onSubmit}
+      onChange={props.onChange}
+      searchValue={props.searchValue}
     />
   );
 }
