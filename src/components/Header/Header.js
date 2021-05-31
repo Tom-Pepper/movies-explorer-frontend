@@ -30,7 +30,10 @@ function Header({ menuIsOpened, openMenu, closeMenu, isProfilePageActive, logged
               <NavLink to="/profile" className="navigation__account navigation__account_theme_dark" onClick={closeMenu}>Аккаунт</NavLink>
             </div>
             <button className={`header__button-burger ${!isProfilePageActive && "header__button-burger_white"}`} onClick={openMenu}/>
-            <Navigation menuIsOpened={menuIsOpened} closeMenu={closeMenu}/>
+            <Navigation
+              menuIsOpened={menuIsOpened}
+              loseMenu={closeMenu}
+            />
           </div>
         ) : (
           <div className={`header__wrapper ${isProfilePageActive && "header__button_hidden"}`}>

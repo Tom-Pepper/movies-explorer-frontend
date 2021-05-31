@@ -45,3 +45,8 @@
 .input__error_visible {
   display: block;
 }
+
+.input__error_visible_search {
+  display: flex;
+  justify-content: center;
+}
